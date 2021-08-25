@@ -7,21 +7,26 @@
     "declarations": true
   },
   "dependencies": {
-    "egg": "^2.15.1",
+    "egg": "^2.30.0",
+    "egg-echat": "^1.0.9",
     "egg-mysql": "^3.0.0",
     "egg-redis": "^2.4.0",
-    "egg-scripts": "^2.11.0",
+    "egg-scripts": "^2.14.0",
+    "egg-sequelize": "^6.0.0",
+    "egg-swagger-doc": "^2.3.2",
     "lodash": "^4.17.21",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "mysql2": "^2.3.0"
   },
   "devDependencies": {
-    "autod": "^3.0.1",
+    "autod": "^3.1.1",
     "autod-egg": "^1.1.0",
-    "egg-bin": "^4.11.0",
-    "egg-ci": "^1.11.0",
-    "egg-mock": "^3.21.0",
-    "eslint": "^5.13.0",
-    "eslint-config-egg": "^7.1.0"
+    "egg-bin": "^4.16.4",
+    "egg-ci": "^1.18.0",
+    "egg-mock": "^3.26.0",
+    "egg-sequelize-auto": "^0.1.1",
+    "eslint": "^7.32.0",
+    "eslint-config-egg": "^9.0.0"
   },
   "engines": {
     "node": ">=10.0.0"

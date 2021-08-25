@@ -38,6 +38,15 @@ class RedisService extends Service {
       return del
     }
   }
+
+  // keys
+  async keys(patten) {
+    let { redis } = this.app;
+    let res = await redis.keys(patten)
+    if (!res) return;
+    console.log(res)
+    return res; 
+  }
 }
 
 module.exports = RedisService;
