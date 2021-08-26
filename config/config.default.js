@@ -16,7 +16,30 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1629370536333_6562';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = ['mid'];
+
+  // on error handler 
+  config.onerror = {
+    // all(err, ctx) {
+    //   // 在此处定义针对所有响应类型的错误处理方法
+    //   // 注意，定义了 config.all 之后，其他错误处理方法不会再生效
+    //   ctx.body = `error: ${err}`;
+    //   ctx.status = 500;
+    // },
+    // html(err, ctx) {
+    //   // html hander
+    //   ctx.body = '<h3>error</h3>';
+    //   ctx.status = 500;
+    // },
+    // json(err, ctx) {
+    //   // json hander
+    //   ctx.body = { message: 'error' };
+    //   ctx.status = 500;
+    // },
+    // jsonp(err, ctx) {
+    //   // 一般来说，不需要特殊针对 jsonp 进行错误定义，jsonp 的错误处理会自动调用 json 错误处理，并包装成 jsonp 的响应格式
+    // },
+  };
 
   // add your user config here
   const userConfig = {
@@ -35,8 +58,8 @@ module.exports = appInfo => {
       dirScanner: './app/controller', // 配置自动扫描的控制器路径。
       // 接口文档的标题，描述或其它。
       apiInfo: {
-        title: 'NAPI', // 接口文档的标题。
-        description: 'swagger-ui for NAPI document.', // 接口文档描述。
+        title: '测试文档', // 接口文档的标题。
+        description: 'swagger-ui', // 接口文档描述。
         version: '1.0.0', // 接口文档版本。
       },
       schemes: ['http', 'https'], // 配置支持的协议。

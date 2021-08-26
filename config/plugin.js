@@ -13,7 +13,7 @@ module.exports = {
   
   // 配置 egg-sequelize 插件信息。
   sequelize: {
-    enable: false, // 是否启用。
+    enable: true, // 是否启用。
     package: 'egg-sequelize', // 指定包名称。
   },
 

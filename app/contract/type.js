@@ -1,8 +1,8 @@
-const JsonBody = {
+const baseResponse = {
     code: {
         type: 'number',
         required: true,
-        example: 0
+        example: 200
     },
     message: {
         type: 'string',
@@ -10,18 +10,11 @@ const JsonBody = {
         example: 'success'
     },
     data: {
-        type: 'Enum',
-        required: true,
-        example: []
+        type: 'string',
+        example: ''
     },
 }
 
 module.exports = {
-    indexJsonBody: {
-        ...JsonBody,
-        data: {
-            type: 'string',
-            example: 'test'
-        },
-    },
+    baseResponse: baseResponse
 };
