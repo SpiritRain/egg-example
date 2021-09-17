@@ -5,7 +5,7 @@ const Controller = require('egg').Controller;
 /**
  * @Controller Home
  */
-class HomeController extends Controller {
+class WxworkController extends Controller {
   /**
    * @summary 首页
    * @description 首页
@@ -13,10 +13,13 @@ class HomeController extends Controller {
    * @response 200 baseResponse 创建成功
    */
   async index() {
+    let access = await this.service.wxwork.getToken();
     this.ctx.body = {
-      
+      data: {
+        access: access
+      }
     };
   }
 }
 
-module.exports = HomeController;
+module.exports = WxworkController;

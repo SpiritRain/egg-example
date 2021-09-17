@@ -1,7 +1,7 @@
 {
-  "name": "egg-test",
-  "version": "1.0.0",
-  "description": "test",
+  "name": "egg-example",
+  "version": "0.0.1",
+  "description": "test egg",
   "private": true,
   "egg": {
     "declarations": true
@@ -14,6 +14,7 @@
     "egg-scripts": "^2.14.0",
     "egg-sequelize": "^6.0.0",
     "egg-swagger-doc": "^2.3.2",
+    "egg-view-nunjucks": "^2.3.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mysql2": "^2.3.0"
@@ -48,7 +49,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:SpiritRain/egg-example.git"
   },
   "author": "SpiritRain",
   "license": "MIT"

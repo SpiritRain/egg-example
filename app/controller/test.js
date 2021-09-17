@@ -26,6 +26,7 @@ class TestController extends Controller {
 
     this.ctx.body = {
       data: {
+        menv: this.app.config.menv,
         money: yuan,
         help: helptime,
         md5: this.ctx.helper.md5(helptime),
@@ -48,7 +49,7 @@ class TestController extends Controller {
   /**
    * @summary 抛出异常errstatus
    * @description 抛出异常errstatus
-   * @router get /error/{:error}
+   * @router get /error/{error}
    * @response 200 baseResponse ok 
    */
   async err_status() {
@@ -95,6 +96,53 @@ class TestController extends Controller {
 
     this.ctx.body = {
       data: res
+    };
+  }
+
+  /**
+   * @summary 机器人发送消息
+   * @description 机器人发送msg
+   * @router get /encoding/{msg}
+   * @response 200 baseResponse 创建成功
+   */
+  async fs_encoding() {
+    let source = this.ctx.params.source;
+    let key = '9cd5b4cf899492079cd5b4cf89949207';
+    let encode = this.ctx.helper.sha256Encrypt(key, source);
+    let decode = this.ctx.helper.sha256Decrypt(key, encode);
+    this.ctx.body = {
+      source,
+      encode,
+      decode
+    }
+  }
+
+  /**
+   * @summary 机器人发送消息
+   * @description 机器人发送msg
+   * @router get /bot/{msg}
+   * @response 200 baseResponse 创建成功
+   */
+   async bot_msg() {
+    let msg = this.ctx.params.msg || "no msg";
+    let res = await this.ctx.curl(this.config.wxwork.boot_url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }, 
+      data: {
+        "msgtype": "text",
+        "text": {
+            "content": msg
+        }
+      },
+      dataType: 'json'
+    });
+    this.ctx.body = {
+      data: {
+        msg: msg,
+        res: res,
+      }
     };
   }
 }
