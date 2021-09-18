@@ -59,7 +59,7 @@ module.exports = {
     const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
     cipher.setAutoPadding(true);
     let newSrc = iv  + source
-    console.log('bak:', newSrc)
+    // console.log('bak:', newSrc)
     return cipher.update(newSrc, clearEncoding, cipherEncoding) + cipher.final(cipherEncoding);
   },
 
@@ -68,6 +68,7 @@ module.exports = {
    */
    sha256Decrypt (key, data, iv) {
     iv = iv || Buffer.alloc(16).join(''); 
+    key = crypto.createHash('sha256').update(key).digest();
     const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
     decipher.setAutoPadding(true);
     let result = decipher.update(data, cipherEncoding, clearEncoding) + decipher.final(clearEncoding)

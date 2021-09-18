@@ -33,14 +33,40 @@ class HomeController extends Controller {
 
     let result = JSON.stringify({
       options: [{
-        id: 'id1',
-        value: 'value1'
-      }, {
-        id: 'id2',
-        value: 'value2'
-      }],
+          "id": "id1",
+          "value": "name1"
+        },
+        {
+          "id": "id2",
+          "value": "name2"
+        },
+        {
+          "id": "id3",
+          "value": "name3"
+        }
+      ],
+      i18nResources: [{
+          "locale": "zh_cn",
+          "isDefault": true,
+          "texts": {
+            "name1": "值1",
+            "name2": "值2",
+            "name3": "值3"
+          }
+        },
+        {
+          "locale": "en_us",
+          "isDefault": false,
+          "texts": {
+            "name1": "value1",
+            "name2": "value2",
+            "name3": "value3"
+          }
+        }
+      ]
+
     });
-  
+
     let resStr = this.ctx.helper.sha256Encrypt(key, result)
 
 
@@ -50,8 +76,6 @@ class HomeController extends Controller {
       data: {
         result: resStr
       },
-      // result_new: resStr,
-      // result_bak: this.ctx.helper.sha256Encrypt_bak(key, result),
       // un: this.ctx.helper.sha256Decrypt(key, resStr)
     };
   }
