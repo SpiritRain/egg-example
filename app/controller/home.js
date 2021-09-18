@@ -48,7 +48,7 @@ class HomeController extends Controller {
       code: 0,
       msg: 'success',
       data: {
-        result: 'q2PRNXK7RH7xB53lo24qWiWq5IApxctVmIWXFrKZdDJxdHwEIav8VYNAu12eC7KrXQ3q17Ot5Qc2534QfOqDXYAoorJm4ltvEEcmjS2pNdclyXzz55ft1R/T0OiH5LHp'
+        result: resStr
       },
       // result_new: resStr,
       // result_bak: this.ctx.helper.sha256Encrypt_bak(key, result),

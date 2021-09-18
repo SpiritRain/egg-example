@@ -54,31 +54,8 @@ module.exports = {
   sha256Encrypt(key, source, iv) {
     // iv = crypto.randomBytes(16)
     // iv = '4f6ec76094a43dc7'
-    iv = iv || Buffer.alloc(16)// 16位向量
-    const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
-    cipher.setAutoPadding(true);
-    let sSrcBytes = Buffer.from(source)
-    let newSrc  = Buffer.concat([iv, sSrcBytes])
-    console.log('new:', newSrc)
-    // let cipherChunks = [];
-    // cipherChunks.push(cipher.update(newSrc, clearEncoding, cipherEncoding));
-    // cipherChunks.push(cipher.final(cipherEncoding));
-
-    // return cipherChunks.join('');
-
-    var crypted = cipher.update(newSrc, clearEncoding, cipherEncoding);
-    crypted += cipher.final(cipherEncoding);
-    crypted = Buffer.from(crypted, cipherEncoding).toString('base64');
-    return crypted;
-  },
-
-    /** 
-   * 飞书加密
-   */
-  sha256Encrypt_bak(key, source, iv) {
-    // iv = crypto.randomBytes(16)
-    // iv = '4f6ec76094a43dc7'
     iv = iv || Buffer.alloc(16).join('')// 16位向量
+    key = crypto.createHash('sha256').update(key).digest();
     const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
     cipher.setAutoPadding(true);
     let newSrc = iv  + source
