@@ -14,7 +14,7 @@ class HomeController extends Controller {
    */
   async index() {
     this.ctx.body = {
-      
+
     };
   }
 
@@ -31,31 +31,27 @@ class HomeController extends Controller {
     let linkage_params = this.ctx.request.body.linkage_params || {};
     let key = '9cd5b4cf899492079cd5b4cf89949207';
 
-    let result =JSON.stringify( {
-      options : [
-        {
-          id: 'id1',
-          value: 'value1'
-        }, {
-          id: 'id2',
-          value: 'value2'
-        }
-      ],
-      user_id,
-      employee_id,
-      token,
-      linkage_params
+    let result = JSON.stringify({
+      options: [{
+        id: 'id1',
+        value: 'value1'
+      }, {
+        id: 'id2',
+        value: 'value2'
+      }],
     });
   
     let resStr = this.ctx.helper.sha256Encrypt(key, result)
 
 
     this.ctx.body = {
-      code : 0,
-      msg : 'success',
-      data : {
-        result: resStr
+      code: 0,
+      msg: 'success',
+      data: {
+        result: 'q2PRNXK7RH7xB53lo24qWiWq5IApxctVmIWXFrKZdDJxdHwEIav8VYNAu12eC7KrXQ3q17Ot5Qc2534QfOqDXYAoorJm4ltvEEcmjS2pNdclyXzz55ft1R/T0OiH5LHp'
       },
+      // result_new: resStr,
+      // result_bak: this.ctx.helper.sha256Encrypt_bak(key, result),
       // un: this.ctx.helper.sha256Decrypt(key, resStr)
     };
   }

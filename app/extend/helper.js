@@ -3,6 +3,8 @@
 const moment = require('moment');
 const crypto = require('crypto');
 const _ = require('lodash');
+const clearEncoding = 'utf8';
+const cipherEncoding = 'base64';
 
 module.exports = {
   // 格式化时间
@@ -49,13 +51,39 @@ module.exports = {
   /** 
    * 飞书加密
    */
-   sha256Encrypt(key, source, iv) {
+  sha256Encrypt(key, source, iv) {
     // iv = crypto.randomBytes(16)
+    // iv = '4f6ec76094a43dc7'
+    iv = iv || Buffer.alloc(16)// 16位向量
+    const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
+    cipher.setAutoPadding(true);
+    let sSrcBytes = Buffer.from(source)
+    let newSrc  = Buffer.concat([iv, sSrcBytes])
+    console.log('new:', newSrc)
+    // let cipherChunks = [];
+    // cipherChunks.push(cipher.update(newSrc, clearEncoding, cipherEncoding));
+    // cipherChunks.push(cipher.final(cipherEncoding));
+
+    // return cipherChunks.join('');
+
+    var crypted = cipher.update(newSrc, clearEncoding, cipherEncoding);
+    crypted += cipher.final(cipherEncoding);
+    crypted = Buffer.from(crypted, cipherEncoding).toString('base64');
+    return crypted;
+  },
+
+    /** 
+   * 飞书加密
+   */
+  sha256Encrypt_bak(key, source, iv) {
+    // iv = crypto.randomBytes(16)
+    // iv = '4f6ec76094a43dc7'
     iv = iv || Buffer.alloc(16).join('')// 16位向量
     const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
     cipher.setAutoPadding(true);
     let newSrc = iv  + source
-    return cipher.update(newSrc, 'utf8', 'base64') + cipher.final('base64');
+    console.log('bak:', newSrc)
+    return cipher.update(newSrc, clearEncoding, cipherEncoding) + cipher.final(cipherEncoding);
   },
 
   /** 
@@ -65,7 +93,7 @@ module.exports = {
     iv = iv || Buffer.alloc(16).join(''); 
     const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
     decipher.setAutoPadding(true);
-    let result = decipher.update(data, 'base64', 'utf8') + decipher.final('utf8')
+    let result = decipher.update(data, cipherEncoding, clearEncoding) + decipher.final(clearEncoding)
     return result.substring(iv.length)
    }
 }
