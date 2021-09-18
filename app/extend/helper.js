@@ -51,31 +51,22 @@ module.exports = {
    */
    sha256Encrypt(key, source, iv) {
     // iv = crypto.randomBytes(16)
-    iv = iv || Buffer.alloc(16); // 16位向量
+    iv = iv || Buffer.alloc(16).join('')// 16位向量
     const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
     cipher.setAutoPadding(true);
-    let newSrc = Buffer.alloc(source.length + iv.length);
-    iv.copy(newSrc, 0, 0, iv.length);
-    newSrc.write(source, iv.length);
-    let cipherChunks = [];
-    let txt = cipher.update(newSrc, 'utf8', 'base64')
-    cipherChunks.push(txt);
-    cipherChunks.push(cipher.final('base64'));
-    return cipherChunks.join('');
+    let newSrc = iv  + source
+    return cipher.update(newSrc, 'utf8', 'base64') + cipher.final('base64');
   },
 
   /** 
    * 飞书解密
    */
    sha256Decrypt (key, data, iv) {
-    iv = iv || Buffer.alloc(16); 
-    let cipherChunks = [];
-    let decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+    iv = iv || Buffer.alloc(16).join(''); 
+    const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
     decipher.setAutoPadding(true);
-    cipherChunks.push(decipher.update(data, 'base64', 'utf8'));
-    cipherChunks.push(decipher.final('utf8'));
-    console.log(cipherChunks.slice(0, iv.length))
-    return cipherChunks.slice(0, iv.length)[1];
+    let result = decipher.update(data, 'base64', 'utf8') + decipher.final('utf8')
+    return result.substring(iv.length)
    }
 }
 

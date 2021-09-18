@@ -1,10 +1,12 @@
 //middleware handler
 
+const showMsg = false
+
 module.exports = (options, app) => {
   return async function (ctx, next) {
     try {
       await next();
-      if (ctx.body) {
+      if (ctx.body && showMsg) {
         ctx.body['code'] = 200;
         ctx.body['message'] = 'success';
       }
@@ -17,7 +19,7 @@ module.exports = (options, app) => {
           throw err;
       }
     } finally {
-      if (ctx.body) {
+      if (ctx.body && showMsg) {
         ctx.body['env'] = app.config.env;
         ctx.body['version'] = app.config.pkg.version;
         ctx.body['timestamp'] = ctx.helper.formatTime();

@@ -106,8 +106,8 @@ class TestController extends Controller {
    * @response 200 baseResponse 创建成功
    */
   async fs_encoding() {
+    const key = '9cd5b4cf899492079cd5b4cf89949207';
     let source = this.ctx.params.source;
-    let key = '9cd5b4cf899492079cd5b4cf89949207';
     let encode = this.ctx.helper.sha256Encrypt(key, source);
     let decode = this.ctx.helper.sha256Decrypt(key, encode);
     this.ctx.body = {
