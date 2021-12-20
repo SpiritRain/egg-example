@@ -1,6 +1,8 @@
 'use strict';
 const _ = require('lodash');
 const moment = require('moment');
+// const QRCode = require('../service/qrcode')
+// const QRCode = require('../service/artqrcode')
 
 const Controller = require('egg').Controller;
 
@@ -115,6 +117,23 @@ class TestController extends Controller {
       encode,
       decode
     }
+  }
+  
+  
+  async qrcode() {
+    // console.log('qrcode')
+    let out = 'null'
+    // QRCode.toString('I am a pony!',{type:'utf8'}, function (err, url) {
+    //   out = url
+    //   console.log(url)
+    // })
+    // console.log(out)
+    
+    
+    this.ctx.body = {
+      out
+
+    };
   }
 
   /**
