@@ -1,7 +1,7 @@
 'use strict';
 const _ = require('lodash');
 const moment = require('moment');
-// const QRCode = require('../service/qrcode')
+const { QRCode } = require('../service/qrcode')
 // const QRCode = require('../service/artqrcode')
 
 const Controller = require('egg').Controller;
@@ -119,23 +119,6 @@ class TestController extends Controller {
     }
   }
   
-  
-  async qrcode() {
-    // console.log('qrcode')
-    let out = 'null'
-    // QRCode.toString('I am a pony!',{type:'utf8'}, function (err, url) {
-    //   out = url
-    //   console.log(url)
-    // })
-    // console.log(out)
-    
-    
-    this.ctx.body = {
-      out
-
-    };
-  }
-
   /**
    * @summary 机器人发送消息
    * @description 机器人发送msg
@@ -164,6 +147,18 @@ class TestController extends Controller {
       }
     };
   }
+
+  async qrcode() {
+    let text = this.ctx.query.text;
+    if (!text) text = 'Test QR Code'
+
+    let qr  = new QRCode(text)
+    // let matrix  = qr.toMatrix();
+    console.log(qr.toString())
+    
+    this.ctx.body = qr
+  }
+
 }
 
 module.exports = TestController;
