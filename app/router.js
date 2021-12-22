@@ -12,6 +12,7 @@ module.exports = app => {
   // test
   router.get('/test', controller.test.index);
   router.get('/qrcode', controller.test.qrcode);
+  router.get('/image', controller.test.image);
   router.get('/bot/:msg', controller.test.bot_msg);
   router.get('/error', controller.test.err);
   router.get('/error/:err', controller.test.err_status);
