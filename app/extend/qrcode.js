@@ -214,6 +214,7 @@ const jimp = require('jimp');
         corner: {w: 2, h: 2},
         row2: {w: 1, h: 2},
         col2: {w: 2, h: 1},
+        seven: {w: 2, h: 2},
         single: {w: 1, h: 1},
     }
 
@@ -240,7 +241,28 @@ const jimp = require('jimp');
             single: ["./app/public/electron/single.png", "./app/public/electron/single_2.png"],
         }
     }
-
+    const M_FISH = {
+        bgImg: "./app/public/fish/bg.png",
+        bgWidth: 400,
+        bgHeight: 600,
+        codeWidth: 210,
+        codeHeight: 210,
+        top: 100,
+        left: 80,
+        materials: {
+            col2: "./app/public/fish/col2.png",
+            col3: "./app/public/fish/col3.png",
+            col4: "./app/public/fish/col4.png",
+            corner: "./app/public/fish/corner.png",
+            eye: "./app/public/fish/eye.png",
+            row2: "./app/public/fish/row2.png",
+            row2col2: "./app/public/fish/row2col2.png",
+            row3: "./app/public/fish/row3.png",
+            row4: "./app/public/fish/row4.png",
+            seven: "./app/public/fish/seven.png",
+            single: "./app/public/fish/single.png",
+        }
+    }
 
     QRCode = class {
         static CorrectLevel = QRErrorCorrectLevel;
@@ -259,7 +281,6 @@ const jimp = require('jimp');
                 colorLight: "#ffffff",
                 materials: {},
                 correctLevel: QRErrorCorrectLevel.H,
-                ...M_ELECTRON
             };
     
             if (vOption) {
@@ -324,8 +345,25 @@ const jimp = require('jimp');
             return output
         }
 
-        async  toArtQR(cb) {
+        async  toArtQR(type, cb) {
             let drawModules = JSON.parse(JSON.stringify(this._oQRCode.modules));
+            switch (type) {
+                case 'fish':
+                    for (var key in M_FISH) {
+                        this._htOption[key] = M_FISH[key];
+                    }
+                    break; 
+                case 'ee':
+                    for (var key in M_ELECTRON) {
+                        this._htOption[key] = M_ELECTRON[key];
+                    }
+                    break; 
+                default:
+                    for (var key in M_FISH) {
+                        this._htOption[key] = M_FISH[key];
+                    }
+                    break; 
+            }
             const nCount = this._oQRCode.moduleCount;
             const nWidth = this._htOption.codeWidth / nCount;
             const nHeight = this._htOption.codeHeight / nCount;
@@ -448,13 +486,19 @@ const jimp = require('jimp');
                         //draw col3
                         else if (materials.col3 && _isSatisfyUnit(row, col, 1, 3)) {
                             // _oContext.drawImage(_getRealMaterial(materials.col3), nLeft, nTop, nWidth * 3, nHeight);
-                            image.blit(_getRealMaterial(materials.row2col3), nLeft, nTop)
+                            image.blit(_getRealMaterial(materials.col3), nLeft, nTop)
                            _updateDrawModules(row, col, 1, 3);
                         }
                         //draw corner
                         else if (materials.corner && _isSatisfyUnit(row, col, 2, 1) && _isSatisfyUnit(row, col, 1, 2)) {
                             // _oContext.drawImage(_getRealMaterial(materials.corner), nLeft, nTop, nWidth * 2, nHeight * 2);
                             image.blit(_getRealMaterial(materials.corner), nLeft, nTop)
+                            _updateDrawModules(row, col, 2, 2);
+                        }
+                        //draw seven
+                        else if (materials.seven && _isSatisfyUnit(row + 1, col, 2, 1) && _isSatisfyUnit(row, col, 1, 2)) {
+                            // _oContext.drawImage(_getRealMaterial(materials.corner), nLeft, nTop, nWidth * 2, nHeight * 2);
+                            image.blit(_getRealMaterial(materials.seven), nLeft, nTop)
                             _updateDrawModules(row, col, 2, 2);
                         }
                         //draw row2

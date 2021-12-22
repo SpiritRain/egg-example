@@ -153,15 +153,18 @@ class TestController extends Controller {
 
   async qrcode() {
     let text = this.ctx.query.text;
+    let type = this.ctx.query.type;
+    let base 
     if (!text) text = 'Test QR Code'
+    if (!type) type = 'fish'
 
     let qr = new QRCode(text)
     // let matrix  = qr.toMatrix();
-    console.log(qr.toString())
-    let image = await qr.toArtQR()
-    // let buffer = await image.png().toBuffer()
-    image.write('qr.png')
-    let base 
+    // console.log(qr.toString())
+
+    let image = await qr.toArtQR(type)
+    // image.write('qr.png')
+
     image.getBase64(jimp.MIME_JPEG, function (err, src) {
         console.log("rb is \n")
         // console.log(src);
